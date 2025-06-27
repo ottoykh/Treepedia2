@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Photo Sphere Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Photo Sphere Viewer CSS (v3) -->
+  <link rel="stylesheet" href="https://mitmadness.github.io/PanoramaViewer/photo-sphere-viewer.min.css">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+    }
+
+    #viewer {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #error {
+      color: red;
+      text-align: center;
+      margin-top: 2em;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+  <div id="error"></div>
+
+  <!-- Required JS Libraries -->
+  <script src="https://mitmadness.github.io/PanoramaViewer/three.min.js"></script>
+  <script src="https://mitmadness.github.io/PanoramaViewer/uevent.min.js"></script>
+  <script src="https://mitmadness.github.io/PanoramaViewer/doT.min.js"></script>
+  <script src="https://mitmadness.github.io/PanoramaViewer/photo-sphere-viewer.min.js"></script>
+
+  <script>
+    function getImageUrlFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('url');
+    }
+
+    const panoramaUrl = getImageUrlFromQuery();
+
+    if (panoramaUrl) {
+      new PhotoSphereViewer({
+        container: 'viewer',
+        panorama: panoramaUrl,
+        navbar: true,
+        default_fov: 70,
+        loading_img: null,
+        time_anim: false
+      });
+    } else {
+      document.getElementById('error').textContent =
+        'Error: No image URL provided. Please use ?url=YOUR_IMAGE_URL';
+    }
+  </script>
+</body>
+</html>
